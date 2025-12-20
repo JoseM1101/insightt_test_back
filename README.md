@@ -53,22 +53,35 @@ The frontend uses React + Material UI. It handles authentication using JWT token
 ### Frontend Structure
 ```graphql
 src/
-├─ api/             # Axios instance and API functions
+├─ api/                       # Axios instance and API functions
+│  ├─ axios.ts
 │  ├─ auth.ts
-│  ├─ tasks.ts
-│  └─ axios.ts
-├─ components/      # Reusable UI components
-│  ├─ Modal.tsx      # Custom modal for managing tasks
-│  └─ TodoItem.tsx   # Single task item with update, toggle, delete actions
-├─ hooks/           # Custom hooks
-│  └─ useTasks.ts    # Manages task state and CRUD operations with API
-├─ pages/           # Pages for routing
+│  └─ tasks.ts
+│
+├─ components/                # Reusable UI components
+│  ├─ Modal.tsx               # Custom modal for managing tasks
+│  ├─ TodoItem.tsx            # Single task item with update, toggle, delete actions
+│  ├─ ProtectedRoute.tsx      # Route guard component
+│  └─ LoaderOverlay.tsx       # Global loading spinner overlay
+│
+├─ context/                   # React context providers
+│  ├─ AuthContext.tsx         # Authentication state & logic
+│  └─ LoadingContext.tsx      # Global loading state
+│
+├─ hooks/                     # Custom hooks
+│  ├─ useAuth.ts              # AuthContext consumer hook
+│  ├─ useLoading.ts           # LoadingContext consumer hook
+│  └─ useTasks.ts             # Manages task state and CRUD operations
+│
+├─ pages/                     # Pages for routing
 │  ├─ Login.tsx
 │  ├─ SignIn.tsx
 │  ├─ Confirm.tsx
 │  └─ Todo.tsx
-├─ routes.tsx       # Frontend route definitions
-└─ types.ts         # TypeScript types for tasks, users, and API responses
+│
+├─ routes.tsx                 # Frontend route definitions
+├─ types.ts                   # TypeScript types for tasks, users, API responses
+└─ main.tsx                   # App entry point
 ```
 
 ### Backend API
