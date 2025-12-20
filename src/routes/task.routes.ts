@@ -14,7 +14,7 @@ import {
 
 const router = Router()
 
-router.get("/", getTasks)
+router.get("/:userId", getTasks)
 
 router.post("/", validate(createTaskSchema), createTask)
 

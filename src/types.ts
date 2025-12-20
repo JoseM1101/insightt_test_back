@@ -1,9 +1,8 @@
-export interface Task {
-  id: string
+export interface CreateTaskData {
   title: string
-  completed: boolean
+  completed?: boolean
 }
 
-export interface TaskParams {
-  id: string
+export interface UpdateTaskData {
+  title?: string
 }
