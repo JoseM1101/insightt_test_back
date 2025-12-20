@@ -1,6 +1,6 @@
 import * as taskRepository from "../repositories/task.repository"
-import type { Task } from "@prisma/client"
-import { CreateTaskData, UpdateTaskData } from "../types"
+import type { Task } from "../../generated/prisma/client"
+import { CreateTaskData, UpdateTaskData } from "../types/task"
 
 export const getTasks = async (userId: string): Promise<Task[]> => {
   return taskRepository.findAll(userId)

@@ -7,6 +7,7 @@ import {
   toggleTaskCompleted,
 } from "../controllers/task.controller"
 import { validate } from "../middleware/validate"
+import { authenticate } from "../middleware/cognitoAuth"
 import {
   createTaskSchema,
   updateTaskSchema,
@@ -14,12 +15,11 @@ import {
 
 const router = Router()
 
-router.get("/:userId", getTasks)
+router.use(authenticate)
 
+router.get("/", getTasks)
 router.post("/", validate(createTaskSchema), createTask)
-
-router.put("/:id", validate(updateTaskSchema), updateTask)
-
+router.patch("/:id", validate(updateTaskSchema), updateTask)
 router.delete("/:id", deleteTask)
 router.post("/:id/toggle", toggleTaskCompleted)
 

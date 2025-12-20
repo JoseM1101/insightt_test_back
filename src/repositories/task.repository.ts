@@ -1,6 +1,6 @@
-import type { Task } from "@prisma/client"
+import type { Task } from "../../generated/prisma/client"
 import { prisma } from "../db/prisma"
-import { CreateTaskData, UpdateTaskData } from "../types"
+import { CreateTaskData, UpdateTaskData } from "../types/task"
 
 export const findAll = async (userId: string): Promise<Task[]> => {
   return prisma.task.findMany({
@@ -8,6 +8,7 @@ export const findAll = async (userId: string): Promise<Task[]> => {
     orderBy: { createdAt: "desc" },
   })
 }
+
 export const create = async (
   data: CreateTaskData,
   userId: string
