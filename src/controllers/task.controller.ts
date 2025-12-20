@@ -1,24 +1,27 @@
 import { Request, Response } from "express"
 import * as taskService from "../services/task.service"
-
-const requireId = (req: Request, res: Response): string | null => {
-  const { id } = req.params
-  if (!id) {
-    res.status(400).json({ message: "id is required" })
-    return null
-  }
-  return id
-}
+import { requireId } from "../utils"
+import { getCurrentUserFromToken } from "../utils"
 
 export const getTasks = async (req: Request, res: Response) => {
-  if (!req.params.userId) return
+  const authHeader = req.headers.authorization
+  if (!authHeader) throw new Error("Authorization header missing")
 
-  const tasks = await taskService.getTasks(req.params.userId)
+  const token = authHeader.replace("Bearer ", "")
+  const user = await getCurrentUserFromToken(token)
+
+  const tasks = await taskService.getTasks(user.id)
   res.json(tasks)
 }
 
 export const createTask = async (req: Request, res: Response) => {
-  const task = await taskService.createTask(req.body, "user-1")
+  const authHeader = req.headers.authorization
+  if (!authHeader) throw new Error("Authorization header missing")
+
+  const token = authHeader.replace("Bearer ", "")
+  const user = await getCurrentUserFromToken(token)
+
+  const task = await taskService.createTask(req.body, user.id)
   res.status(201).json(task)
 }
 
